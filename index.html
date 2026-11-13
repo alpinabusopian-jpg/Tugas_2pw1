@@ -1,116 +1,267 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lorem</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan 5 - Toko Online</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, sans-serif; background: #f3f4f6; color: #222; }
+  header { background: #000000; color: #fff; padding: 16px 20px; }
+  header h1 { margin: 0 0 10px; font-size: 22px; }
+  #cari { width: 100%; max-width: 360px; padding: 9px 12px; border: 0; border-radius: 6px; font-size: 15px; }
+  .layout { display: flex; gap: 20px; padding: 20px; flex-wrap: wrap; align-items: flex-start; }
+  main { flex: 1 1 520px; }
+  aside { flex: 1 1 300px; max-width: 100%; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  #daftarProduk { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .produk { background: #fff; border-radius: 8px; padding: 14px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  .produk .ikon { font-size: 44px; }
+  .produk h3 { margin: 6px 0; font-size: 16px; }
+  .produk p { margin: 3px 0; font-size: 14px; }
+  .harga { color: #111; font-weight: bold; }
+  button { cursor: pointer; border: 0; border-radius: 6px; padding: 8px 12px; font-size: 14px; }
+  .btn-tambah { background: #000000; color: #fff; margin-top: 6px; width: 100%; }
+  .btn-hapus { background: #dc2626; color: #fff; padding: 4px 8px; font-size: 12px; }
+  .btn-kosong { background: #000000; color: #fff; }
+  .btn-checkout { background: #000000; color: #fff; }
+  #toggleCart { width: 100%; background: #000000; color: #fff; border-radius: 8px 8px 0 0; padding: 12px; font-size: 16px; }
+  #cartBody { padding: 12px; }
+  #cartList { list-style: none; margin: 0; padding: 0; }
+  #cartList li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+  .aksi { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  #ringkasan { margin: 0 20px 20px; padding: 16px; background: #fff; border-left: 5px solid #000000; border-radius: 6px; display: none; }
+  #ringkasan h2 { margin-top: 0; }
+</style>
 </head>
 <body>
 
-    <header id="top">
-        <h1>Lorem</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll ke bawah untuk membaca selengkapnya.</p>
-    </header>
+<header>
+  <h1> Toko Sederhana</h1>
+  <input type="text" id="cari" placeholder="Cari produk...">
+</header>
 
-    <main>
-        <section>
-            <h2>Lorem Ipsum 1</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+<div class="layout">
+  <main>
+    <div id="daftarProduk"></div>
+  </main>
 
-        <section>
-            <h2>Lorem Ipsum 2</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  <aside>
+    <button id="toggleCart">Keranjang (<span id="jumlahItem">0</span> item) ▾</button>
+    <div id="cartBody">
+      <ul id="cartList"></ul>
+      <p><strong>Total: Rp <span id="totalHarga">0</span></strong></p>
+      <div class="aksi">
+        <button class="btn-kosong" id="kosongkan">Kosongkan Keranjang</button>
+        <button class="btn-checkout" id="checkout">Checkout</button>
+      </div>
+    </div>
+  </aside>
+</div>
 
-        <section>
-            <h2>Lorem Ipsum 3</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+<div id="ringkasan"></div>
 
-        <section>
-            <h2>Lorem Ipsum 4</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+$(document).ready(function () {
 
-        <section>
-            <h2>Lorem Ipsum 5</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  var produk = [
+    { id: 1, nama: "Laptop",     harga: 7500000, stok: 3, ikon: "💻" },
+    { id: 2, nama: "Smartphone", harga: 3500000, stok: 5, ikon: "📱" },
+    { id: 3, nama: "Headphone",  harga: 450000,  stok: 2, ikon: "🎧" },
+    { id: 4, nama: "Keyboard",   harga: 3000000,  stok: 6, ikon: "⌨️" },
+    { id: 5, nama: "Mouse",      harga: 150000,  stok: 1, ikon: "🖱️" },
+    { id: 6, nama: "Kamera",     harga: 5200000, stok: 4, ikon: "📷" }
+  ];
 
-        <section>
-            <h2>Lorem Ipsum 6</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  var keranjang = []; 
 
-        <section>
-            <h2>Lorem Ipsum 7</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  function rupiah(angka) {
+    return angka.toLocaleString("id-ID");
+  }
 
-        <section>
-            <h2>Lorem Ipsum 8</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  function cariProduk(id) {
+    for (var i = 0; i < produk.length; i++) {
+      if (produk[i].id === id) return produk[i];
+    }
+  }
 
-        <section>
-            <h2>Lorem Ipsum 9</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  function cariItem(id) {
+    for (var i = 0; i < keranjang.length; i++) {
+      if (keranjang[i].id === id) return keranjang[i];
+    }
+  }
 
-        <section>
-            <h2>Lorem Ipsum 10</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+  function tampilkanProduk() {
+    var wadah = document.getElementById("daftarProduk");
+    for (var i = 0; i < produk.length; i++) {
+      var p = produk[i];
 
-        <section>
-            <h2>Lorem Ipsum 11</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
+      var kartu = document.createElement("div");
+      kartu.className = "produk";
+      kartu.setAttribute("data-nama", p.nama.toLowerCase());
 
-        <section>
-            <h2>Lorem Ipsum 12</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </section>
-    </main>
+      var ikon = document.createElement("div");
+      ikon.className = "ikon";
+      ikon.appendChild(document.createTextNode(p.ikon));
 
-    <footer>
-        &copy; 2026 Lorem
-    </footer>
+      var judul = document.createElement("h3");
+      judul.appendChild(document.createTextNode(p.nama));
 
-    <!-- Tombol kembali ke atas -->
-    <button id="btnTop" type="button" aria-label="Kembali ke atas" title="Kembali ke atas">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="6 15 12 9 18 15"></polyline>
-        </svg>
-    </button>
+      var harga = document.createElement("p");
+      harga.className = "harga";
+      harga.appendChild(document.createTextNode("Rp " + rupiah(p.harga)));
 
-    <script src="script.js"></script>
+      var stok = document.createElement("p");
+      stok.appendChild(document.createTextNode("Stok: "));
+      var angkaStok = document.createElement("span");
+      angkaStok.className = "stok";
+      angkaStok.id = "stok-" + p.id;
+      angkaStok.appendChild(document.createTextNode(p.stok));
+      stok.appendChild(angkaStok);
 
+      var tombol = document.createElement("button");
+      tombol.className = "btn-tambah";
+      tombol.setAttribute("data-id", p.id);
+      tombol.appendChild(document.createTextNode("Tambah ke Keranjang"));
+
+      kartu.appendChild(ikon);
+      kartu.appendChild(judul);
+      kartu.appendChild(harga);
+      kartu.appendChild(stok);
+      kartu.appendChild(tombol);
+      wadah.appendChild(kartu);
+    }
+  }
+
+  function perbaruiRingkasan() {
+    var jumlah = 0, total = 0;
+    for (var i = 0; i < keranjang.length; i++) {
+      jumlah += keranjang[i].qty;
+      total += keranjang[i].qty * cariProduk(keranjang[i].id).harga;
+    }
+    $("#jumlahItem").text(jumlah);
+    $("#totalHarga").text(rupiah(total));
+  }
+
+  function perbaruiStok(p) {
+    $("#stok-" + p.id).text(p.stok);
+  }
+
+  function hapusDariData(id) {
+    var item = cariItem(id);
+    var p = cariProduk(id);
+    p.stok += item.qty;                   
+    keranjang.splice(keranjang.indexOf(item), 1);
+    perbaruiStok(p);
+  }
+
+  tampilkanProduk();
+
+  $("#daftarProduk").on("click", ".btn-tambah", function () {
+    var p = cariProduk(parseInt($(this).attr("data-id")));
+
+    if (p.stok <= 0) {
+      alert("Stok " + p.nama + " sudah habis!");
+      return;
+    }
+
+    p.stok--;
+    perbaruiStok(p);
+
+    var item = cariItem(p.id);
+    if (item) {
+      item.qty++;
+      $("#item-" + p.id + " .qty").text(item.qty);
+      $("#item-" + p.id + " .sub").text(rupiah(item.qty * p.harga));
+    } else {
+      keranjang.push({ id: p.id, qty: 1 });
+      var $li = $(
+        '<li id="item-' + p.id + '" data-id="' + p.id + '">' +
+          '<span>' + p.nama + ' x<span class="qty">1</span><br>' +
+          'Rp <span class="sub">' + rupiah(p.harga) + '</span></span>' +
+          '<button class="btn-hapus">Hapus</button>' +
+        '</li>'
+      );
+      $li.hide();
+      $("#cartList").append($li);          
+      $li.fadeIn(400);                     
+    }
+    perbaruiRingkasan();
+  });
+
+
+  $("#cartList").on("click", ".btn-hapus", function () {
+    var $li = $(this).closest("li");
+    var id = parseInt($li.attr("data-id"));
+
+    if (confirm("Hapus " + cariProduk(id).nama + " dari keranjang?")) {
+      $li.fadeOut(400, function () {       
+        $(this).remove();                  
+        hapusDariData(id);
+        perbaruiRingkasan();
+      });
+    }
+  });
+
+  $("#kosongkan").click(function () {
+    if (keranjang.length === 0) {
+      alert("Keranjang sudah kosong.");
+      return;
+    }
+    if (confirm("Kosongkan seluruh keranjang?")) {
+      while (keranjang.length > 0) {
+        hapusDariData(keranjang[0].id);
+      }
+      $("#cartList").empty();              
+      perbaruiRingkasan();
+    }
+  });
+
+  $("#toggleCart").click(function () {
+    $("#cartBody").fadeToggle(300);       
+  });
+
+  $("#checkout").click(function () {
+    if (keranjang.length === 0) {
+      alert("Keranjang masih kosong!");
+      return;
+    }
+    var nama = prompt("Masukkan nama pembeli:");
+    if (nama === null || $.trim(nama) === "") {
+      alert("Nama pembeli wajib diisi.");
+      return;
+    }
+
+    var total = 0;
+    var $ul = $("<ul></ul>");
+    for (var i = 0; i < keranjang.length; i++) {
+      var p = cariProduk(keranjang[i].id);
+      var sub = keranjang[i].qty * p.harga;
+      total += sub;
+      $ul.append($("<li></li>").text(p.nama + " x" + keranjang[i].qty + " - Rp " + rupiah(sub)));
+    }
+
+    $("#ringkasan").empty()
+      .append($("<h2></h2>").text("Ringkasan Pesanan"))
+      .append($("<p></p>").text("Nama pembeli: " + $.trim(nama)))
+      .append($ul)
+      .append($("<p></p>").html("<strong>Total: Rp " + rupiah(total) + "</strong>"))
+      .fadeIn(400);
+
+    keranjang = [];
+    $("#cartList").empty();
+    perbaruiRingkasan();
+  });
+
+  $("#cari").on("input", function () {
+    var kata = $(this).val().toLowerCase();
+    $(".produk").each(function () {
+      var cocok = $(this).attr("data-nama").indexOf(kata) !== -1;
+      $(this).toggle(cocok);
+    });
+  });
+
+});
+</script>
 </body>
 </html>
